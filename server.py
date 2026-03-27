@@ -38,15 +38,15 @@ def _load_tasks(split: str) -> list[dict[str, Any]]:
 
 def _sample_needed_reasoning_tokens(obs: np.ndarray, rng: np.random.Generator) -> int:
     q_norm, a_norm, complexity = obs.tolist()
-    mean = 180.0 + 1900.0 * complexity + 450.0 * q_norm + 180.0 * a_norm
-    noise = rng.normal(0.0, 160.0)
-    return int(np.clip(mean + noise, 60.0, 4096.0))
+    mean = 120.0 + 1700.0 * complexity + 250.0 * q_norm + 120.0 * a_norm
+    noise = rng.normal(0.0, 120.0)
+    return int(np.clip(mean + noise, 80.0, 4096.0))
 
 
 def _correctness_probability(cap: int, needed: int) -> float:
-    margin = (cap - needed) / 240.0
+    margin = (cap - needed) / 320.0
     saturation = 1.0 / (1.0 + np.exp(-margin))
-    p = 0.08 + 0.9 * saturation
+    p = 0.10 + 0.86 * saturation
     return float(np.clip(p, 0.02, 0.97))
 
 
